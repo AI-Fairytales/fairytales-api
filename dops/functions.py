@@ -156,7 +156,7 @@ def get_images_tale(tale, title):
    summarizer = pipeline("summarization")
    sentences = tale.split(". ")
    n = len(sentences)
-   print('len', n)
+   #print('len', n)
    part = n // MAX_IMAGES
    tale_parts = [". ".join(sentences[i * part : i * part + part]) + ". " for i in range(MAX_IMAGES)]
    i = MAX_IMAGES - 1
@@ -230,7 +230,7 @@ def read_voices(sound_provider):
 #@title
 def get_sentiment(tale):
     """Find sentiment """
-    classifier = pipeline('sentiment-analysis', max_length=512, truncation=True)
+    classifier = pipeline('sentiment-analysis', max_length=512, truncation=True, model = "distilbert-base-uncased-finetuned-sst-2-english")
     result = classifier(tale)
     return result
 
@@ -257,7 +257,7 @@ def get_love_mood(tale):
 
 def get_images_prompts(tale):
    """Divide text into several parts and receive pictures for those parts """
-   summarizer = pipeline("summarization")
+   summarizer = pipeline("summarization", model = "sshleifer/distilbart-cnn-12-6")
    sentences = tale.split(". ")
    n = len(sentences)
    print('len', n)
