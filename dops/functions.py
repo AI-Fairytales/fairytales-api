@@ -11,7 +11,7 @@ from fpdf import FPDF
 from boto3 import Session
 from contextlib import closing
 from botocore.exceptions import BotoCoreError, ClientError
-from bad_words import var_list
+from fairytales.dops.bad_words import var_list
 from nltk.stem import PorterStemmer
 
 
