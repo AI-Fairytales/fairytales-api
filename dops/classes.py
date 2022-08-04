@@ -72,7 +72,7 @@ class GPT:
         self.presence_penalty = presence_penalty
         self.best_of = best_of
         self.frequency_penalty = frequency_penalty
-        openai.api_key = "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"
+        
 
     def reset(self):
         self.examples = {}
