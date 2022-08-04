@@ -260,7 +260,7 @@ def get_images_prompts(tale):
    summarizer = pipeline("summarization", model = "sshleifer/distilbart-cnn-12-6")
    sentences = tale.split(". ")
    n = len(sentences)
-   print('len', n)
+   #print('len', n)
    part = n // MAX_IMAGES
    tale_parts = [". ".join(sentences[i * part : i * part + part]) + ". " for i in range(MAX_IMAGES)]
    i = MAX_IMAGES - 1
