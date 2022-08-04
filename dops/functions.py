@@ -31,7 +31,7 @@ def chunk(lst, n):
 
 
 def postprocess_text(text):
-    """Postprocess of text received from GPT-3 """
+   """Postprocess of text received from GPT-3 """
     text = text.replace('\n\n', '\n')
     words_list = text.split(" ")
     parts_list = list(chunk(words_list, 30))
@@ -152,7 +152,7 @@ def get_audio(sound_provider, text, voice, API_KEY, USER_ID):
 
 
 def get_images_tale(tale, title):
-   """Divide text into several parts and receive pictures for those parts """
+    """Divide text into several parts and receive pictures for those parts """
    summarizer = pipeline("summarization")
    sentences = tale.split(". ")
    n = len(sentences)
@@ -227,6 +227,7 @@ def read_voices(sound_provider):
     return voice_ids, voice_names
 
 
+#@title
 def get_sentiment(tale):
     """Find sentiment """
     classifier = pipeline('sentiment-analysis', max_length=512, truncation=True)
@@ -235,8 +236,39 @@ def get_sentiment(tale):
 
 def get_love_mood(tale):
     """Find bad words in text  """
+    tale_list = list(tale.split(" "))
+    root_words = []
+    ps = PorterStemmer()
+    for w in tale_list:
+         rootWord = ps.stem(w)
+         root_words.append(rootWord)
+
+
     for word in var_list:
+        if word in root_words:
+            print(f"bad****{word}*****")
+            return True, word
+
+    
         if tale.find(" " + word + " ") != -1:
             print(f"bad****{word}*****")
             return True, word
     return False, ""
+
+def get_images_prompts(tale):
+   """Divide text into several parts and receive pictures for those parts """
+   summarizer = pipeline("summarization")
+   sentences = tale.split(". ")
+   n = len(sentences)
+   print('len', n)
+   part = n // MAX_IMAGES
+   tale_parts = [". ".join(sentences[i * part : i * part + part]) + ". " for i in range(MAX_IMAGES)]
+   i = MAX_IMAGES - 1
+   tale_parts.append(". ".join(sentences[i * part + part : ]) + ". " )
+   main_sents = []
+   for part in tale_parts:
+      summary=summarizer(part, max_length=30, min_length=5, do_sample=False)[0]
+      temp = summary['summary_text']
+      main = list(temp.split("."))[0]
+      main_sents.append(main.lower())
+   return main_sents
