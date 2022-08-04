@@ -31,7 +31,7 @@ def chunk(lst, n):
 
 
 def postprocess_text(text):
-   """Postprocess of text received from GPT-3 """
+    """Postprocess of text received from GPT-3 """
     text = text.replace('\n\n', '\n')
     words_list = text.split(" ")
     parts_list = list(chunk(words_list, 30))
@@ -152,7 +152,7 @@ def get_audio(sound_provider, text, voice, API_KEY, USER_ID):
 
 
 def get_images_tale(tale, title):
-    """Divide text into several parts and receive pictures for those parts """
+   """Divide text into several parts and receive pictures for those parts """
    summarizer = pipeline("summarization")
    sentences = tale.split(". ")
    n = len(sentences)
